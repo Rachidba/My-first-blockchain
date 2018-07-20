@@ -28,6 +28,9 @@ public class Block {
         return calculatedHash;
     }
 
+    /**
+     * @param difficulty: the number of 0’s they must solve for
+     */
     public void mineBlock(int difficulty) {
         String target = new String(new char[difficulty]).replace('\0', '0');
         while(! this.hash.substring(0, difficulty).equals(target)) {
