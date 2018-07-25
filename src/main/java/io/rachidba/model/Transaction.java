@@ -1,5 +1,6 @@
 package io.rachidba.model;
 
+import io.rachidba.App;
 import io.rachidba.util.StringUtil;
 
 import java.security.PrivateKey;
@@ -52,6 +53,41 @@ public class Transaction {
                 StringUtil.getStringFromKey(this.recipient) +
                 Float.toString(value);
         return StringUtil.verifyECDSASig(sender, data, signature);
+    }
+
+    // Return true if new transaction could be created
+    public boolean processTransaction() {
+        if (this.verifiySignature() == false) {
+            System.out.println("#Transaction signature failed to verify");
+            return false;
+        }
+        // Gather transaction inputs (Make sure they are unspent
+        for (TransactionInput input: inputs) {
+            input.UTXO = App.UTXOs.get(input.transactionOutputId);
+        }
+        // Check if transaction is valid
+        // if (getInputsValue())
+
+        return true;
+    }
+
+    // Return sum of inputs(UTXOs) values
+    public float getInputsValue() {
+        float total = 0;
+        for (TransactionInput input: inputs) {
+            if (input.UTXO == null) continue;
+            total += input.UTXO.value;
+        }
+        return total;
+    }
+
+    // Return sum of outputs value
+    public float getOutputsValue() {
+        float total = 0;
+        for(TransactionOutput output: outputs) {
+            total += output.value;
+        }
+        return total;
     }
 
 }

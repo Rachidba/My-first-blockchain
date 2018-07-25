@@ -1,13 +1,14 @@
 package io.rachidba;
 
-import com.google.gson.GsonBuilder;
 import io.rachidba.model.Block;
 import io.rachidba.model.Transaction;
+import io.rachidba.model.TransactionOutput;
 import io.rachidba.model.Wallet;
 import io.rachidba.util.StringUtil;
 
 import java.security.Security;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class App 
 {
     public static ArrayList<Block> blockchain = new ArrayList<Block>();
+    public static HashMap<String, TransactionOutput> UTXOs = new HashMap<String, TransactionOutput>();
     public static int difficulty = 5;
     public static Wallet walletA;
     public static Wallet walletB;
